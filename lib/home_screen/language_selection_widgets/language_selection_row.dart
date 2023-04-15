@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_language_translate/api_requests/text_translation_service.dart';
+import 'package:riverpod_language_translate/home_screen/language_selection_widgets/drop_down_button.dart';
 
-import 'drop_down_button.dart';
-
-class LanguageSelectionRowMobile extends StatefulWidget {
-  const LanguageSelectionRowMobile({
+class LanguageSelectionRow extends StatefulWidget {
+  const LanguageSelectionRow({
     Key? key,
     required this.onSourceLanguageChanged,
     required this.onTargetLanguageChanged,
@@ -14,10 +13,10 @@ class LanguageSelectionRowMobile extends StatefulWidget {
   final Function(String) onTargetLanguageChanged;
 
   @override
-  State<LanguageSelectionRowMobile> createState() => _LanguageSelectionRowMobileState();
+  State<LanguageSelectionRow> createState() => _LanguageSelectionRowState();
 }
 
-class _LanguageSelectionRowMobileState extends State<LanguageSelectionRowMobile> {
+class _LanguageSelectionRowState extends State<LanguageSelectionRow> {
 
   List<String> _items = [];
   String _sourceDropDownValue = '';
@@ -36,6 +35,7 @@ class _LanguageSelectionRowMobileState extends State<LanguageSelectionRowMobile>
       _items = languages;
       _sourceDropDownValue = _items.first;
       _targetDropDownValue = _items.first;
+      // print(_items);
     });
   }
 
@@ -67,7 +67,7 @@ class _LanguageSelectionRowMobileState extends State<LanguageSelectionRowMobile>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       mainAxisSize: MainAxisSize.max,
       children: [

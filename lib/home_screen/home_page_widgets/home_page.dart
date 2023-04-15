@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod_language_translate/home_screen/responsive_layout_widget.dart';
+import 'package:riverpod_language_translate/home_screen/home_page_widgets/responsive_layout_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
