@@ -81,7 +81,10 @@ class _LanguageTranslationBodyDesktopState extends State<LanguageTranslationBody
                   child: InputBox(
                       controller: _languageController,
                       function: _controllerCallBack)),
-              const Expanded(flex: 1, child: SizedBox()),
+              const Expanded(
+                  flex: 1,
+                  child: SizedBox()
+              ),
               Expanded(
                   flex: 7,
                   child: TranslatedBox(translatedText: _translatedText))

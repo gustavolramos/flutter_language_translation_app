@@ -24,7 +24,7 @@ class TranslatedBox extends StatelessWidget {
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
-              return CustomTextStyle(text: 'Waiting for user input');
+              return const CustomTextStyle(text: 'Waiting for user input');
             }
           }),
     );
