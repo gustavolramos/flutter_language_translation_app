@@ -12,13 +12,13 @@ class TranslatedBox extends StatelessWidget {
       height: 215,
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
+        color: Colors.white,
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: FutureBuilder<String>(
           future: translatedText,
-          builder:
-              (BuildContext context, AsyncSnapshot<String> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
             if (snapshot.hasData) {
               return Text(snapshot.data!);
             } else if (snapshot.hasError) {

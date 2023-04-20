@@ -12,12 +12,14 @@ class InputBox extends StatelessWidget {
       height: 215,
       child: TextField(
         controller: controller,
-        onSubmitted: function,
+        onChanged: function,
         maxLines: null,
         expands: true,
         textAlign: TextAlign.start,
         textAlignVertical: TextAlignVertical.top,
         decoration: const InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
           border: OutlineInputBorder(),
           hintText: 'Digite seu texto aqui, com no máximo 500 caracteres',
         ),

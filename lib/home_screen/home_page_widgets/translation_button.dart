@@ -15,5 +15,3 @@ class TranslationButton extends StatelessWidget {
         child: const Text('Translate'));
   }
 }
-
-

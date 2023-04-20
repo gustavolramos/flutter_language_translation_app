@@ -15,16 +15,15 @@ class LanguageTranslationBodyDesktop extends StatefulWidget {
 class _LanguageTranslationBodyDesktopState extends State<LanguageTranslationBodyDesktop> {
 
   final TextTranslationService _textTranslationService = TextTranslationService();
-  late String _inputText;
+  final TextEditingController _languageController = TextEditingController();
   Future<String> _translatedText = Future.value('Awaiting translation...');
+  String _inputText = '';
   String _sourceLanguage = '';
   String _targetLanguage = '';
-  final TextEditingController _languageController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -34,8 +33,8 @@ class _LanguageTranslationBodyDesktopState extends State<LanguageTranslationBody
   }
 
   void _controllerCallBack(String text) {
+    text = _languageController.text;
     setState(() {
-      text = _languageController.text;
       _inputText = text;
     });
   }
@@ -54,8 +53,7 @@ class _LanguageTranslationBodyDesktopState extends State<LanguageTranslationBody
 
   Future<String> _translateText() async {
     setState(() {
-      _translatedText = _textTranslationService.translateLanguage(
-          _inputText, _targetLanguage, _sourceLanguage);
+      _translatedText = _textTranslationService.translateLanguage(_sourceLanguage, _targetLanguage, _inputText);
     });
     return _translatedText;
   }
@@ -80,14 +78,19 @@ class _LanguageTranslationBodyDesktopState extends State<LanguageTranslationBody
                   flex: 7,
                   child: InputBox(
                       controller: _languageController,
-                      function: _controllerCallBack)),
+                      function: _controllerCallBack
+                  )
+              ),
               const Expanded(
                   flex: 1,
                   child: SizedBox()
               ),
               Expanded(
                   flex: 7,
-                  child: TranslatedBox(translatedText: _translatedText))
+                  child: TranslatedBox(
+                      translatedText: _translatedText
+                  )
+              ),
             ],
           ),
         ),
