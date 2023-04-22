@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod_language_translate/api_requests/text_translation_service.dart';
 import 'package:riverpod_language_translate/home_screen/home_page_widgets/translation_button.dart';
+import '../../helper_classes/text_translation_service.dart';
 import '../language_box_widgets/text_box_input.dart';
 import '../language_box_widgets/text_box_translated.dart';
 import '../language_selection_widgets/language_selection_row.dart';

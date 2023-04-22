@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod_language_translate/api_requests/text_translation_service.dart';
 import 'package:riverpod_language_translate/home_screen/language_selection_widgets/drop_down_button.dart';
+import '../../helper_classes/text_translation_service.dart';
 
 class LanguageSelectionRow extends StatefulWidget {
   const LanguageSelectionRow({
