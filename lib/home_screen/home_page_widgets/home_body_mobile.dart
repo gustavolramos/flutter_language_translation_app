@@ -1,21 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_language_translate/home_screen/home_page_widgets/translation_button.dart';
 import '../../helper_classes/text_translation_service.dart';
 import '../language_box_widgets/text_box_input.dart';
 import '../language_box_widgets/text_box_translated.dart';
 import '../language_selection_widgets/language_selection_row.dart';
 
-class LanguageTranslationBodyMobile extends StatefulWidget {
-  const LanguageTranslationBodyMobile({Key? key}) : super(key: key);
+final sourceLanguageProvider = Provider<String>((ref) {
+  return 'sourceLanguage';
+});
+
+final targetLanguageProvider = Provider<String>((ref) {
+  return 'targetLanguage';
+});
+
+final sourceChangerProvider = Provider<String>((ref) {
+  final newSourceLanguage = ref.watch(sourceLanguageProvider);
+  return newSourceLanguage;
+});
+
+class LanguageTranslationBodyMobile extends ConsumerStatefulWidget {
+  const LanguageTranslationBodyMobile({super.key});
 
   @override
-  State<LanguageTranslationBodyMobile> createState() =>
+  ConsumerState<ConsumerStatefulWidget> createState() =>
       _LanguageTranslationBodyMobileState();
 }
 
-class _LanguageTranslationBodyMobileState extends State<LanguageTranslationBodyMobile> {
-
-  final TextTranslationService _textTranslationMethods = TextTranslationService();
+class _LanguageTranslationBodyMobileState
+    extends ConsumerState<LanguageTranslationBodyMobile> {
+  final TextTranslationService _textTranslationMethods =
+      TextTranslationService();
   late String _inputText;
   Future<String> _translatedText = Future.value('Awaiting translation...');
   String _sourceLanguage = '';
@@ -88,7 +103,8 @@ class _LanguageTranslationBodyMobileState extends State<LanguageTranslationBodyM
         const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Expanded(flex: 7, child: TranslatedBox(translatedText: _translatedText)),
+          child: Expanded(
+              flex: 7, child: TranslatedBox(translatedText: _translatedText)),
         )
       ],
     );

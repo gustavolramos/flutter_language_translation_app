@@ -3,11 +3,7 @@ import 'package:riverpod_language_translate/home_screen/language_selection_widge
 import '../../helper_classes/text_translation_service.dart';
 
 class LanguageSelectionRow extends StatefulWidget {
-  const LanguageSelectionRow({
-    Key? key,
-    required this.onSourceLanguageChanged,
-    required this.onTargetLanguageChanged,
-  }) : super(key: key);
+  const LanguageSelectionRow({super.key, required this.onSourceLanguageChanged, required this.onTargetLanguageChanged});
 
   final Function(String) onSourceLanguageChanged;
   final Function(String) onTargetLanguageChanged;
@@ -17,7 +13,6 @@ class LanguageSelectionRow extends StatefulWidget {
 }
 
 class _LanguageSelectionRowState extends State<LanguageSelectionRow> {
-
   List<String> _items = [];
   String _sourceDropDownValue = '';
   String _targetDropDownValue = '';
@@ -35,7 +30,6 @@ class _LanguageSelectionRowState extends State<LanguageSelectionRow> {
       _items = languages;
       _sourceDropDownValue = _items.first;
       _targetDropDownValue = _items.first;
-      // print(_items);
     });
   }
 
@@ -73,7 +67,10 @@ class _LanguageSelectionRowState extends State<LanguageSelectionRow> {
       children: [
         _items.isEmpty
             ? const CircularProgressIndicator()
-            : LanguageDropDownButton(items: _items, dropDownValue: _sourceDropDownValue, dropDownCallBack: _sourceDropDownCallBack),
+            : LanguageDropDownButton(
+                items: _items,
+                dropDownValue: _sourceDropDownValue,
+                dropDownCallBack: _sourceDropDownCallBack),
         IconButton(
           icon: const Icon(Icons.compare_arrows),
           onPressed: _switchLanguages,
@@ -81,7 +78,10 @@ class _LanguageSelectionRowState extends State<LanguageSelectionRow> {
         ),
         _items.isEmpty
             ? const CircularProgressIndicator()
-            : LanguageDropDownButton(items: _items, dropDownValue: _targetDropDownValue, dropDownCallBack: _targetDropDownCallBack),
+            : LanguageDropDownButton(
+                items: _items,
+                dropDownValue: _targetDropDownValue,
+                dropDownCallBack: _targetDropDownCallBack),
       ],
     );
   }

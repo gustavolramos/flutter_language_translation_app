@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../../styling/custom_text_style.dart';
 
 class TranslatedBox extends StatelessWidget {
-  const TranslatedBox({Key? key, required this.translatedText}) : super(key: key);
+  const TranslatedBox({Key? key, required this.translatedText})
+      : super(key: key);
 
   final Future<String> translatedText;
 
