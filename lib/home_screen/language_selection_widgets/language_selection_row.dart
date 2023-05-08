@@ -70,7 +70,8 @@ class _LanguageSelectionRowState extends State<LanguageSelectionRow> {
             : LanguageDropDownButton(
                 items: _items,
                 dropDownValue: _sourceDropDownValue,
-                dropDownCallBack: _sourceDropDownCallBack),
+                dropDownCallBack: _sourceDropDownCallBack,
+                ),
         IconButton(
           icon: const Icon(Icons.compare_arrows),
           onPressed: _switchLanguages,
@@ -81,7 +82,8 @@ class _LanguageSelectionRowState extends State<LanguageSelectionRow> {
             : LanguageDropDownButton(
                 items: _items,
                 dropDownValue: _targetDropDownValue,
-                dropDownCallBack: _targetDropDownCallBack),
+                dropDownCallBack: _targetDropDownCallBack,
+                ),
       ],
     );
   }

@@ -34,15 +34,10 @@ dependencies:
   http: ^0.13.5
   responsive_builder: ^0.6.4
   google_fonts: ^4.0.3
-  riverpod_annotation: ^2.1.0
-  flutter_riverpod: ^2.3.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^2.3.3
-  riverpod_generator: ^2.2.0
-  riverpod_lint: ^1.3.0
   custom_lint: ^0.3.4
   flutter_lints: ^2.0.1
 

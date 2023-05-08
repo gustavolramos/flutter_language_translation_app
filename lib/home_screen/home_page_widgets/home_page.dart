@@ -15,9 +15,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Column(
         children: const [
-          Expanded(
-              child: ResponsiveLayout()
-          ),
+          ResponsiveLayout(),
         ],
       ),
     );

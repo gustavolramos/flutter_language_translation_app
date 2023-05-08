@@ -21,7 +21,7 @@ class InputBox extends StatelessWidget {
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(),
-          hintText: 'Digite seu texto aqui, com no máximo 500 caracteres',
+          hintText: 'Type your text here, up to 500 characters.',
         ),
       ),
     );

@@ -22,7 +22,7 @@ class TextTranslationService {
   }
 
   Future<String> translateLanguage(String sourceLanguage, String targetLanguage, String text) async {
-
+    
     var url = translateURL;
     var headers = translateHeader;
     var body = {'source_language': sourceLanguage, 'target_language': targetLanguage, 'text': text};
@@ -31,7 +31,11 @@ class TextTranslationService {
     if (response.statusCode == 200) {
       final String jsonResponse = response.body;
       final responseBody = json.decode(jsonResponse);
-      return responseBody['data']['translatedText'];
+      if (responseBody.containsKey('data') && responseBody['data'].containsKey('translatedText')) {
+        return responseBody['data']['translatedText'];
+      } else {
+        throw Exception('Failed to parse translation response');
+      }
     } else {
       throw Exception('Failed to translate language with status: ${response.statusCode}');
     }

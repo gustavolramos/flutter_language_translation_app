@@ -23,7 +23,7 @@ class TranslatedBox extends StatelessWidget {
             if (snapshot.hasData) {
               return Text(snapshot.data!);
             } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
+              return Text('${snapshot.error}');
             } else {
               return const CustomTextStyle(text: 'Waiting for user input');
             }
