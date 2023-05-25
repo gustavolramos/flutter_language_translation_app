@@ -1,4 +1,4 @@
-name: riverpod_language_translate
+name: language_translation_app
 description: This Flutter project utilizes the Google Translate API and Riverpod to create a Google Translate variation for portfolio reasons only.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.

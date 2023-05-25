@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod_language_translate/home_screen/home_page_widgets/translation_button.dart';
-import 'package:riverpod_language_translate/home_screen/language_box_widgets/text_box_input.dart';
-import 'package:riverpod_language_translate/home_screen/language_box_widgets/text_box_translated.dart';
+import 'package:language_translation_app/home_screen/home_page_widgets/translation_button.dart';
+import 'package:language_translation_app/home_screen/language_box_widgets/text_box_input.dart';
+import 'package:language_translation_app/home_screen/language_box_widgets/text_box_translated.dart';
 import '../../helper_classes/text_translation_service.dart';
 import '../language_selection_widgets/language_selection_row.dart';
 
@@ -9,7 +9,8 @@ class LanguageTranslationBodyDesktop extends StatefulWidget {
   const LanguageTranslationBodyDesktop({Key? key}) : super(key: key);
 
   @override
-  State<LanguageTranslationBodyDesktop> createState() => _LanguageTranslationBodyDesktopState();
+  State<LanguageTranslationBodyDesktop> createState() =>
+      _LanguageTranslationBodyDesktopState();
 }
 
 class _LanguageTranslationBodyDesktopState extends State<LanguageTranslationBodyDesktop> {
@@ -53,7 +54,8 @@ class _LanguageTranslationBodyDesktopState extends State<LanguageTranslationBody
 
   Future<String> _translateText() async {
     setState(() {
-      _translatedText = _textTranslationService.translateLanguage(_sourceLanguage, _targetLanguage, _inputText);
+      _translatedText = _textTranslationService.translateLanguage(
+          _sourceLanguage, _targetLanguage, _inputText);
     });
     return _translatedText;
   }
@@ -78,19 +80,11 @@ class _LanguageTranslationBodyDesktopState extends State<LanguageTranslationBody
                   flex: 7,
                   child: InputBox(
                       controller: _languageController,
-                      function: _controllerCallBack
-                  )
-              ),
-              const Expanded(
-                  flex: 1,
-                  child: SizedBox()
-              ),
+                      function: _controllerCallBack)),
+              const Expanded(flex: 1, child: SizedBox()),
               Expanded(
                   flex: 7,
-                  child: TranslatedBox(
-                      translatedText: _translatedText
-                  )
-              ),
+                  child: TranslatedBox(translatedText: _translatedText)),
             ],
           ),
         ),

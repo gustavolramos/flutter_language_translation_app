@@ -1,4 +1,4 @@
-# riverpod_language_translate
+# language_translation_app
 
 This Flutter project utilizes the Text Translate API to create a Google Translate alike app for portfolio reasons only.
 

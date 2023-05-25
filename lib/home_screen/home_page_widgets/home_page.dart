@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod_language_translate/home_screen/home_page_widgets/responsive_layout_widget.dart';
+import 'package:language_translation_app/home_screen/home_page_widgets/responsive_layout_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,9 +12,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Column(
-        children: const [
+        children: [
           ResponsiveLayout(),
         ],
       ),

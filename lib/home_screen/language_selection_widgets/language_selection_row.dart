@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod_language_translate/home_screen/language_selection_widgets/drop_down_button.dart';
+import 'package:language_translation_app/home_screen/language_selection_widgets/drop_down_button.dart';
 import '../../helper_classes/text_translation_service.dart';
 
 class LanguageSelectionRow extends StatefulWidget {
-  const LanguageSelectionRow({super.key, required this.onSourceLanguageChanged, required this.onTargetLanguageChanged});
+  const LanguageSelectionRow(
+      {super.key,
+      required this.onSourceLanguageChanged,
+      required this.onTargetLanguageChanged});
 
   final Function(String) onSourceLanguageChanged;
   final Function(String) onTargetLanguageChanged;
@@ -71,7 +74,7 @@ class _LanguageSelectionRowState extends State<LanguageSelectionRow> {
                 items: _items,
                 dropDownValue: _sourceDropDownValue,
                 dropDownCallBack: _sourceDropDownCallBack,
-                ),
+              ),
         IconButton(
           icon: const Icon(Icons.compare_arrows),
           onPressed: _switchLanguages,
@@ -83,7 +86,7 @@ class _LanguageSelectionRowState extends State<LanguageSelectionRow> {
                 items: _items,
                 dropDownValue: _targetDropDownValue,
                 dropDownCallBack: _targetDropDownCallBack,
-                ),
+              ),
       ],
     );
   }

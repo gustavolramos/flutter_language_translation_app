@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod_language_translate/home_screen/home_page_widgets/translation_button.dart';
+import 'package:language_translation_app/home_screen/home_page_widgets/translation_button.dart';
 import '../../helper_classes/text_translation_service.dart';
 import '../language_box_widgets/text_box_input.dart';
 import '../language_box_widgets/text_box_translated.dart';
