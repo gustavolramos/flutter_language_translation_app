@@ -6,7 +6,7 @@ import '../../helper_classes/text_translation_service.dart';
 import '../language_selection_widgets/language_selection_row.dart';
 
 class LanguageTranslationBodyDesktop extends StatefulWidget {
-  const LanguageTranslationBodyDesktop({Key? key}) : super(key: key);
+  const LanguageTranslationBodyDesktop({super.key});
 
   @override
   State<LanguageTranslationBodyDesktop> createState() =>
@@ -14,23 +14,34 @@ class LanguageTranslationBodyDesktop extends StatefulWidget {
 }
 
 class _LanguageTranslationBodyDesktopState extends State<LanguageTranslationBodyDesktop> {
-
   final TextTranslationService _textTranslationService = TextTranslationService();
   final TextEditingController _languageController = TextEditingController();
   Future<String> _translatedText = Future.value('Awaiting translation...');
   String _inputText = '';
   String _sourceLanguage = '';
   String _targetLanguage = '';
+  List<Map<String, String>> _items = [];
 
   @override
   void initState() {
     super.initState();
+    _initializeLanguages();
   }
 
   @override
   void dispose() {
     super.dispose();
     _languageController.dispose();
+  }
+
+  Future<void> _initializeLanguages() async {
+    final List<Map<String, String>> languages =
+        await _textTranslationService.getLanguages();
+    setState(() {
+      _items = languages;
+      _sourceLanguage = _items.first['code']!;
+      _targetLanguage = _items.first['code']!;
+    });
   }
 
   void _controllerCallBack(String text) {
@@ -40,15 +51,17 @@ class _LanguageTranslationBodyDesktopState extends State<LanguageTranslationBody
     });
   }
 
-  void _onSourceLanguageChanged(String value) {
+  void _onSourceLanguageChanged(String value) async {
     setState(() {
-      _sourceLanguage = value;
+      _sourceLanguage =
+          _items.firstWhere((language) => language['name'] == value)['code']!;
     });
   }
 
-  void _onTargetLanguageChanged(String value) {
+  void _onTargetLanguageChanged(String value) async {
     setState(() {
-      _targetLanguage = value;
+      _targetLanguage =
+          _items.firstWhere((language) => language['name'] == value)['code']!;
     });
   }
 
@@ -69,6 +82,7 @@ class _LanguageTranslationBodyDesktopState extends State<LanguageTranslationBody
           onSourceLanguageChanged: _onSourceLanguageChanged,
           onTargetLanguageChanged: _onTargetLanguageChanged,
         ),
+        const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: Row(
@@ -77,10 +91,12 @@ class _LanguageTranslationBodyDesktopState extends State<LanguageTranslationBody
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                  flex: 7,
-                  child: InputBox(
-                      controller: _languageController,
-                      function: _controllerCallBack)),
+                flex: 7,
+                child: InputBox(
+                  controller: _languageController,
+                  function: _controllerCallBack,
+                ),
+              ),
               const Expanded(flex: 1, child: SizedBox()),
               Expanded(
                   flex: 7,

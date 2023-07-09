@@ -13,12 +13,19 @@ class LanguageTranslationBodyMobile extends StatefulWidget {
 }
 
 class _LanguageTranslationBodyMobileState extends State<LanguageTranslationBodyMobile> {
-  final TextTranslationService _textTranslationMethods = TextTranslationService();
-  late String _inputText;
+  final TextTranslationService _textTranslationService = TextTranslationService();
+  final TextEditingController _languageController = TextEditingController();
   Future<String> _translatedText = Future.value('Awaiting translation...');
+  String _inputText = '';
   String _sourceLanguage = '';
   String _targetLanguage = '';
-  final TextEditingController _languageController = TextEditingController();
+  List<Map<String, String>> _items = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeLanguages();
+  }
 
   @override
   void dispose() {
@@ -26,29 +33,41 @@ class _LanguageTranslationBodyMobileState extends State<LanguageTranslationBodyM
     _languageController.dispose();
   }
 
-  void _controllerCallBack(String text) {
+  Future<void> _initializeLanguages() async {
+    final List<Map<String, String>> languages =
+        await _textTranslationService.getLanguages();
     setState(() {
+      _items = languages;
+      _sourceLanguage = _items.first['code']!;
+      _targetLanguage = _items.first['code']!;
+    });
+  }
+
+  void _controllerCallBack(String text) {
       text = _languageController.text;
+    setState(() {
       _inputText = text;
     });
   }
 
-  void _onSourceLanguageChanged(String value) {
+  void _onSourceLanguageChanged(String value) async {
     setState(() {
-      _sourceLanguage = value;
+      _sourceLanguage =
+          _items.firstWhere((language) => language['name'] == value)['code']!;
     });
   }
 
-  void _onTargetLanguageChanged(String value) {
+  void _onTargetLanguageChanged(String value) async {
     setState(() {
-      _targetLanguage = value;
+      _targetLanguage =
+          _items.firstWhere((language) => language['name'] == value)['code']!;
     });
   }
 
   Future<String> _translateText() async {
     setState(() {
-      _translatedText = _textTranslationMethods
-        .translateLanguage(_inputText, _targetLanguage, _sourceLanguage);
+      _translatedText = _textTranslationService.translateLanguage(
+          _sourceLanguage, _targetLanguage, _inputText);
     });
     return _translatedText;
   }
@@ -62,16 +81,24 @@ class _LanguageTranslationBodyMobileState extends State<LanguageTranslationBodyM
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             const SizedBox(height: 20),
-            LanguageSelectionRow(
-              onSourceLanguageChanged: _onSourceLanguageChanged,
-              onTargetLanguageChanged: _onTargetLanguageChanged,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                LanguageSelectionRow(
+                  onSourceLanguageChanged: _onSourceLanguageChanged,
+                  onTargetLanguageChanged: _onTargetLanguageChanged,
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             Expanded(
               flex: 7,
-              child: InputBox(
-                controller: _languageController,
-                function: _controllerCallBack,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: InputBox(
+                  controller: _languageController,
+                  function: _controllerCallBack,
+                ),
               ),
             ),
             const SizedBox(height: 20),
@@ -86,7 +113,12 @@ class _LanguageTranslationBodyMobileState extends State<LanguageTranslationBodyM
             ),
             const SizedBox(height: 20),
             Expanded(
-                flex: 7, child: TranslatedBox(translatedText: _translatedText)),
+              flex: 7,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: TranslatedBox(translatedText: _translatedText),
+              ),
+            ),
             const SizedBox(height: 20),
           ],
         ),

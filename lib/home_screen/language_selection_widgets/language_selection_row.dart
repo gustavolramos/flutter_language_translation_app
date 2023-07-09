@@ -3,23 +3,24 @@ import 'package:language_translation_app/home_screen/language_selection_widgets/
 import '../../helper_classes/text_translation_service.dart';
 
 class LanguageSelectionRow extends StatefulWidget {
-  const LanguageSelectionRow(
-      {super.key,
-      required this.onSourceLanguageChanged,
-      required this.onTargetLanguageChanged});
+  const LanguageSelectionRow({
+    Key? key,
+    required this.onSourceLanguageChanged,
+    required this.onTargetLanguageChanged,
+  }) : super(key: key);
 
   final Function(String) onSourceLanguageChanged;
   final Function(String) onTargetLanguageChanged;
 
   @override
-  State<LanguageSelectionRow> createState() => _LanguageSelectionRowState();
+  LanguageSelectionRowState createState() => LanguageSelectionRowState();
 }
 
-class _LanguageSelectionRowState extends State<LanguageSelectionRow> {
+class LanguageSelectionRowState extends State<LanguageSelectionRow> {
   List<String> _items = [];
   String _sourceDropDownValue = '';
   String _targetDropDownValue = '';
-  TextTranslationService textTranslationMethods = TextTranslationService();
+  final TextTranslationService _textTranslationMethods = TextTranslationService();
 
   @override
   void initState() {
@@ -28,9 +29,9 @@ class _LanguageSelectionRowState extends State<LanguageSelectionRow> {
   }
 
   Future<void> _initializeDropDownButtons() async {
-    final languages = await textTranslationMethods.getLanguage();
+    final languages = await _textTranslationMethods.getLanguages();
     setState(() {
-      _items = languages;
+      _items = languages.map((language) => language['name'] as String).toList();
       _sourceDropDownValue = _items.first;
       _targetDropDownValue = _items.first;
     });
@@ -64,30 +65,56 @@ class _LanguageSelectionRowState extends State<LanguageSelectionRow> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        _items.isEmpty
-            ? const CircularProgressIndicator()
-            : LanguageDropDownButton(
-                items: _items,
-                dropDownValue: _sourceDropDownValue,
-                dropDownCallBack: _sourceDropDownCallBack,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth < 600) {
+          return Column(
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  _buildDropDownButton(_sourceDropDownValue, _sourceDropDownCallBack),
+                ],
               ),
-        IconButton(
-          icon: const Icon(Icons.compare_arrows),
-          onPressed: _switchLanguages,
-          color: Colors.blue,
-        ),
-        _items.isEmpty
-            ? const CircularProgressIndicator()
-            : LanguageDropDownButton(
-                items: _items,
-                dropDownValue: _targetDropDownValue,
-                dropDownCallBack: _targetDropDownCallBack,
+              IconButton(
+                icon: const Icon(Icons.compare_arrows),
+                onPressed: _switchLanguages,
+                color: Colors.blue,
               ),
-      ],
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  _buildDropDownButton(_targetDropDownValue, _targetDropDownCallBack),
+                ],
+              ),
+            ],
+          );
+        } else {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              _buildDropDownButton(_sourceDropDownValue, _sourceDropDownCallBack),
+              IconButton(
+                icon: const Icon(Icons.compare_arrows),
+                onPressed: _switchLanguages,
+                color: Colors.blue,
+              ),
+              _buildDropDownButton(_targetDropDownValue, _targetDropDownCallBack),
+            ],
+          );
+        }
+      },
     );
+  }
+
+  Widget _buildDropDownButton(String value, ValueChanged<String?> onChanged) {
+    return _items.isEmpty
+        ? const CircularProgressIndicator()
+        : LanguageDropDownButton(
+            items: _items,
+            dropDownValue: value,
+            dropDownCallBack: onChanged,
+          );
   }
 }

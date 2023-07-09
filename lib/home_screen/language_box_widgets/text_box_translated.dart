@@ -7,7 +7,7 @@ class TranslatedBox extends StatelessWidget {
 
   final Future<String> translatedText;
 
-  @override
+@override
   Widget build(BuildContext context) {
     return Container(
       height: 215,
@@ -18,16 +18,17 @@ class TranslatedBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: FutureBuilder<String>(
-          future: translatedText,
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-            if (snapshot.hasData) {
-              return Text(snapshot.data!);
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            } else {
-              return const CustomTextStyle(text: 'Waiting for user input');
-            }
-          }),
+        future: translatedText,
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          if (snapshot.hasData) {
+            return Text(snapshot.data!);
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          } else {
+            return const CustomTextStyle(text: 'Waiting for user input');
+          }
+        },
+      ),
     );
   }
 }

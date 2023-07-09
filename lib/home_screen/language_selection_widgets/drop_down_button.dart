@@ -28,7 +28,10 @@ class LanguageDropDownButton extends StatelessWidget {
           items: items.map((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: Text(value),
+              ),
             );
           }).toList(),
         ),

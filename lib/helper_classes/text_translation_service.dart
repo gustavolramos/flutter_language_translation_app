@@ -4,39 +4,23 @@ import '../constants_and_headers.dart';
 
 class TextTranslationService {
 
-  Future<List<String>> getLanguage() async {
-
-    var url = getURL;
-    final headers = getHeader;
-    var response = await http.get(Uri.parse(url), headers: headers);
-
-    if (response.statusCode == 200) {
-      final String jsonResponse = response.body;
-      final responseBody = json.decode(jsonResponse);
-      final languages = responseBody['data']['languages'];
-      final nameList = List<String>.from(languages.map((language) => language['name']));
-      return nameList;
-    } else {
-      throw Exception('Failed to get languages with status: ${response.statusCode}');
-    }
+Future<List<Map<String, String>>> getLanguages() async {
+  final response = await http.get(Uri.parse(getURL), headers: getHeader);
+  if (response.statusCode == 200) {
+    final jsonResponse = response.body;
+    final responseBody = json.decode(jsonResponse);
+    final languages = List<Map<String, dynamic>>.from(responseBody['data']['languages']);
+    final languageList = languages.map<Map<String, String>>((language) {
+      return {
+        'name': language['name'].toString(),
+        'code': language['code'].toString(),
+      };
+    }).toList();
+    return languageList;
+  } else {
+    throw Exception('Failed to get languages with status: ${response.statusCode}');
   }
-
-    Future<List<String>> getLanguageCodes() async {
-
-    var url = getURL;
-    final headers = getHeader;
-    var response = await http.get(Uri.parse(url), headers: headers);
-
-    if (response.statusCode == 200) {
-      final String jsonResponse = response.body;
-      final responseBody = json.decode(jsonResponse);
-      final languages = responseBody['data']['languages'];
-      final nameList = List<String>.from(languages.map((language) => language['code']));
-      return nameList;
-    } else {
-      throw Exception('Failed to get languages with status: ${response.statusCode}');
-    }
-  }
+}
 
   Future<String> translateLanguage(String sourceLanguage, String targetLanguage, String text) async {
     
@@ -48,11 +32,7 @@ class TextTranslationService {
     if (response.statusCode == 200) {
       final String jsonResponse = response.body;
       final responseBody = json.decode(jsonResponse);
-      if (responseBody.containsKey('data') && responseBody['data'].containsKey('translatedText')) {
-        return responseBody['data']['translatedText'];
-      } else {
-        throw Exception('Failed to parse translation response');
-      }
+      return responseBody['data']['translatedText'];
     } else {
       throw Exception('Failed to translate language with status: ${response.statusCode}');
     }
